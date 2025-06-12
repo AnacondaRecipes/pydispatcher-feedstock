@@ -25,12 +25,16 @@ requirements:
     - python
 
 test:
+  source_files:
+    - tests
   imports:
     - pydispatch
   requires:
     - pip
+    - pytest
   commands:
     - pip check
+    - pytest -vv tests
 
 about:
   home: https://pydispatcher.sourceforge.net
