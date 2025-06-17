@@ -1,6 +1,6 @@
 {% set name = "PyDispatcher" %}
-{% set version = "2.0.5" %}
-{% set sha256 = "5570069e1b1769af1fe481de6dd1d3a388492acddd2cdad7a3bde145615d5caf" %}
+{% set version = "2.0.7" %}
+{% set sha256 = "b777c6ad080dc1bad74a4c29d6a46914fa6701ac70f94b0d66fbcfde62f5be31" %}
 
 package:
   name: {{ name|lower }}
@@ -8,37 +8,40 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
 
 build:
-  number: 3
+  number: 0
   script: pip install . --no-deps --no-build-isolation --ignore-installed --no-cache-dir -vv
 
 requirements:
   host:
     - python
     - pip
-    - setuptools
+    - setuptools >=40.8.0
     - wheel
   run:
     - python
 
 test:
+  source_files:
+    - tests
   imports:
     - pydispatch
   requires:
     - pip
-  commands: 
+    - pytest
+  commands:
     - pip check
+    - pytest -vv tests
 
 about:
   home: https://pydispatcher.sourceforge.net
   license: BSD-3-Clause
   license_family: BSD
   license_file: license.txt
-  summary: 'Multi-producer-multi-consumer signal dispatching mechanism'
-
+  summary: Multi-producer-multi-consumer signal dispatching mechanism
   description: |
     Multi-producer-multi-consumer signal dispatching mechanism
   doc_url: https://pydispatcher.sourceforge.net/
